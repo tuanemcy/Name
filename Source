@@ -1,0 +1,83 @@
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local ToggleButton = Instance.new("TextButton")
+local MenuFrame = Instance.new("Frame")
+local TitleLabel = Instance.new("TextLabel")
+local BoostSpeedButton = Instance.new("TextButton")
+local AutoStealButton = Instance.new("TextButton")
+
+-- Thiết lập GUI
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Phông nền đen
+Frame.Size = UDim2.new(0.5, 0, 0.5, 0) -- Kích thước bảng menu
+Frame.Position = UDim2.new(0.25, 0, 0.25, 0)
+Frame.Parent = ScreenGui
+
+TitleLabel.Text = "Script by nkiet"
+TitleLabel.Size = UDim2.new(1, 0, 0.1, 0)
+TitleLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+TitleLabel.TextColor3 = Color3.fromRGB(0, 255, 0) -- Chữ xanh
+TitleLabel.Parent = Frame
+
+ToggleButton.Text = "Ẩn/Hiện"
+ToggleButton.Size = UDim2.new(0.2, 0, 0.1, 0)
+ToggleButton.Position = UDim2.new(0.4, 0, 0.1, 0)
+ToggleButton.Parent = Frame
+
+MenuFrame.Size = UDim2.new(1, 0, 0.9, 0)
+MenuFrame.Position = UDim2.new(0, 0, 0.1, 0)
+MenuFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50) -- Màu nền cho menu
+MenuFrame.Parent = Frame
+
+-- Nút Boost Speed
+BoostSpeedButton.Text = "Boost Speed"
+BoostSpeedButton.Size = UDim2.new(0.4, 0, 0.1, 0)
+BoostSpeedButton.Position = UDim2.new(0.3, 0, 0.2, 0)
+BoostSpeedButton.Parent = MenuFrame
+
+-- Nút Auto Steal
+AutoStealButton.Text = "Auto Steal"
+AutoStealButton.Size = UDim2.new(0.4, 0, 0.1, 0)
+AutoStealButton.Position = UDim2.new(0.3, 0, 0.4, 0)
+AutoStealButton.Parent = MenuFrame
+
+-- Hàm ẩn/hiện menu
+local function toggleMenu()
+    Frame.Visible = not Frame.Visible
+end
+
+ToggleButton.MouseButton1Click:Connect(toggleMenu)
+
+-- Chức năng Boost Speed
+local function boostSpeed()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+
+    if humanoid then
+        humanoid.WalkSpeed = 100 -- Tăng tốc độ đi bộ
+    end
+end
+
+-- Chức năng Auto Steal
+local function autoSteal()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+
+    while true do
+        wait(1) -- Thời gian chờ giữa các lần ăn cắp
+        -- Giả sử có một đối tượng có thể ăn cắp
+        local targetItem = workspace:FindFirstChild("ItemToSteal") -- Thay đổi tên đối tượng theo nhu cầu
+
+        if targetItem then
+            -- Thực hiện hành động ăn cắp
+            -- Ví dụ: di chuyển đến đối tượng và lấy nó
+            character.HumanoidRootPart.CFrame = targetItem.CFrame
+            -- Thêm mã để thực hiện hành động lấy đồ
+        end
+    end
+end
+
+BoostSpeedButton.MouseButton1Click:Connect(boostSpeed)
+AutoStealButton.MouseButton1Click:Connect(autoSteal)
